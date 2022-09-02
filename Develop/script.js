@@ -1,16 +1,15 @@
 //Array of numbers, letters, and special characters that password generator can use
 
-var specialCharacters = ["!","#","$","%","&"]
-var numericCharacters = ["0","1", "2", "3","4", "5", "6", "7", "8","9"]
-var lowerCasedCharacters = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"]
-var upperCasedCharacters = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"]
+var special = ["!","#","$","%","&","'","(",")","*","+",",","-",".","/",":",";","<","=",">","?","@","[","^","`","{","|","}","~"]
+// var numericCharacters = ['0 1 2 3 4 5 6 7 8 9']
+var numbers = ["0","1", "2", "3","4", "5", "6", "7", "8","9"]
+var lowerCaseLetters = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"]
+var upperCaseLetters = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"]
 
-//USE SPLIT INSTEAD OF ABOVE WITH EACH IN QUOTES. FIRST BUILD EVERYTHING ELSE THEN TRY THE SPLIT
-// var upperCaseCharacters = text.split (" ");
-// var specialCharacters = text.split (" ");
-// var numbericCharacters = text.split (" ");
-// var lowerCaseCharacters = text.split (" ");
+// //Split out numbers seperately
+// var numChar = numericCharacters.split(" ");
 
+// Function for password options of choosing which type of characters and password length
 function getPasswordOptions(){
  var length = parseInt(prompt("How many characters do you want your password to be?"),10);
 
@@ -29,26 +28,26 @@ function getPasswordOptions(){
     return null;
   }
 
-  var hasSpecialCharacters = confirm(
-    "Click OK to confirm including special characters"
+  var hasSpecial = confirm(
+    "Click OK to use special characters in your password"
   )
 
-  var hasNumericCharacters = confirm(
-    "Click OK to confirm including special characters"
+  var hasNumbers = confirm(
+    "Click OK to use numers in your password"
   )
 
-  var hasLowerCasedCharacters = confirm(
-    "Click OK to confirm including special characters"
+  var hasLowerCaseLetters = confirm(
+    "Click OK to use lower cased letters in your password"
   )
 
-  var hasUpperCasedCharacters = confirm(
-    "Click OK to confirm including special characters"
+  var hasUpperCaseLetters = confirm(
+    "Click OK to use upper cased letters in your password"
   )
 
-  if(hasSpecialCharacters === false &&
-    hasNumericCharacters === false &&
-    hasLowerCasedCharacters === false &&
-    hasUpperCasedCharacters === false)
+  if(hasSpecial === false &&
+    hasNumbers === false &&
+    hasLowerCaseLetters === false &&
+    hasUpperCaseLetters === false)
     {
       alert("Must select at least one character type");
       return null
@@ -56,11 +55,11 @@ function getPasswordOptions(){
 
     var passwordOptions = {
       length: length, 
-      hasSpecialCharacters: hasSpecialCharacters,
-      hasNumericCharacters: hasNumericCharacters,
-      hasLowerCasedCharacters: hasLowerCasedCharacters,
-      hasUpperCasedCharacters: hasUpperCasedCharacters
-    }
+      hasSpecial: hasSpecial,
+      hasNumbers: hasNumbers,
+      hasLowerCaseLetters: hasLowerCaseLetters,
+      hasUpperCaseLetters: hasUpperCaseLetters
+        }
     
     return passwordOptions;
 
@@ -84,24 +83,24 @@ function generatePassword(){
 
   if(!options) return null;
 
-  if(options.hasSpecialCharacters){
-    possibleCharacters = possibleCharacters.concat(specialCharacters)
-    guaranteedCharacters.push(getRandom(specialCharacters));
+  if(options.hasSpecial){
+    possibleCharacters = possibleCharacters.concat(special)
+    guaranteedCharacters.push(getRandom(special));
   }
 
-  if(options.hasNumericCharacters){
-    possibleCharacters = possibleCharacters.concat(numericCharacters)
-    guaranteedCharacters.push(getRandom(numericCharacters));
+  if(options.hasNumbers){
+    possibleCharacters = possibleCharacters.concat(numbers)
+    guaranteedCharacters.push(getRandom(numbers));
   }
 
-  if(options.hasLowerCasedCharacters){
-    possibleCharacters = possibleCharacters.concat(lowerCasedCharacters)
-    guaranteedCharacters.push(getRandom(lowerCasedCharacters));
+  if(options.hasLowerCaseLetters){
+    possibleCharacters = possibleCharacters.concat(lowerCaseLetters)
+    guaranteedCharacters.push(getRandom(lowerCaseLetters));
   }
 
-  if(options.hasUpperCasedCharacters){
-    possibleCharacters = possibleCharacters.concat(upperCasedCharacters)
-    guaranteedCharacters.push(getRandom(upperCasedCharacters));
+  if(options.hasUpperCaseLetters){
+    possibleCharacters = possibleCharacters.concat(upperCaseLetters)
+    guaranteedCharacters.push(getRandom(upperCaseLetters));
   }
 
   for(var index=0; index < options.length; index++){
@@ -122,18 +121,14 @@ function generatePassword(){
 var generateBtn = document.querySelector("#generate"); 
 
 
-
 // Write password to the #password input
 function writePassword() {
   var password = generatePassword();
   var passwordText = document.querySelector("#password");
 
   passwordText.value = password;
-
 }
 
 // Add event listener to generate button
 generateBtn.addEventListener("click", writePassword);
 
-//Use this to keep page from reseting when password is generated (from student activity day 4 activity 6)
-event.preventDefault();
